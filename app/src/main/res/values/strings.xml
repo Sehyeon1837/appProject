@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">appProject</string>
+    <string-array name="area_list">
+        <item>BackUp_1.금암2동 주민센터</item>
+        <item>BackUp_2.서서학동 주민센터</item>
+        <item>BackUp_3.송천2동 주민센터</item>
+        <item>BackUp_4.완산 수영장</item>
+        <item>BackUp_5.인후1동 주민센터</item>
+        <item>BackUp_6.평화 도서관</item>
+        <item>BackUp_7.중화산1동 주민센터</item>
+        <item>BackUp_8.전주 자연생태관</item>
+        <item>BackUp_9.전주 하수처리장</item>
+        <item>BackUp_10.덕진동 주민센터</item>
+        <item>BackUp_11.차량등록 사업소</item>
+        <item>BackUp_12.덕진 체련공원</item>
+        <item>BackUp_13.효자3동 주민센터</item>
+        <item>BackUp_14.효자4동 주민센터</item>
+        <item>BackUp_15.서신 도내기샘공원</item>
+        <item>BackUp_16.인후3동 평생학습센터</item>
+        <item>BackUp_17.조촌동 주민센터</item>
+        <item>BackUp_18.혁신 수질복원센터</item>
+    </string-array>
+    <string-array name="columns_name">
+        <item>풍향</item>
+        <item>풍속</item>
+        <item>온도</item>
+        <item>습도</item>
+        <item>기압</item>
+    </string-array>
 </resources>
