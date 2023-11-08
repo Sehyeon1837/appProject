@@ -21,12 +21,9 @@ import jxl.read.biff.BiffException;
 
 public class MainActivity extends AppCompatActivity {
     private RadioGroup choiceYear;
-    String year = "2017";
-    String tempStr;
+    readfiles readfile;
+    String inputYear;
     TextView text;
-    float[] meanData = new float[5];
-    String[] datas = new String[18];
-    String[] area, columns;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,86 +31,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Resources res = getResources();
-        area = res.getStringArray(R.array.area_list);
-        columns = res.getStringArray(R.array.columns_name);
 
         choiceYear = findViewById(R.id.choiceyear);
         text = findViewById(R.id.text);
-        readExcel();
+
+        readfile = new readfiles(text, res, this);
+        readfile.setYear("2017");
 
         choiceYear.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.btu2017) {
-                    year = "2017";
+                    inputYear = "2017";
                 } else if(checkedId == R.id.btu2018) {
-                    year = "2018";
+                    inputYear = "2018";
                 } else if(checkedId == R.id.btu2019) {
-                    year = "2019";
+                    inputYear = "2019";
                 } else if(checkedId == R.id.btu2020) {
-                    year = "2020";
+                    inputYear = "2020";
                 } else if(checkedId == R.id.btu2021) {
-                    year = "2021";
+                    inputYear = "2021";
                 }
-                readExcel();
+                readfile.setYear(inputYear);
             }
         });
-    }
-
-    public void readExcel() {
-        try{
-            text.setText("");
-            for(int i = 0; i < datas.length; i++) {
-                String fileNameTemp = year + "/" + area[i] + year + ".xls";
-                if(i == 13 && (year == "2020" || year == "2021"))
-                    fileNameTemp = year + "/" + "BackUp_14.효자5동 주민센터" + year + ".xls";
-
-                InputStream is = getBaseContext().getResources().getAssets().open(fileNameTemp);
-                Workbook wb = Workbook.getWorkbook(is);
-                readFile(wb);
-                datas[i] = readFile(wb);
-                text.append(area[i].substring(area[i].lastIndexOf(".")+1) + ": " + datas[i]);
-            }
-
-        } catch(IOException | BiffException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private String readFile(Workbook wb) {
-        float[] sumData = {0, 0, 0, 0, 0};
-        tempStr = "";
-        if(wb != null) {
-            Sheet sheet = wb.getSheet(0);
-            if(sheet != null) {
-                int rowIndexStart = 8;
-                if(year == "2020" || year == "2021") //2020,2021 = 1부터 시작
-                    rowIndexStart = 1;
-                int rowTotal = sheet.getColumn(0).length;
-                int rowTemp = rowTotal;
-
-                StringBuilder sb;
-                for(int row = rowIndexStart; row < rowTotal; row++) { //2122, rowTotal
-                    sb = new StringBuilder();
-                    for(int col = 1; col < 6; col++) { //시간 생략, 5개 값만 받아옴
-                        try {
-                            String contents = sheet.getCell(col, row).getContents(); //contents에 해당 값 들어가 있음
-                            double temp = Double.parseDouble(contents);
-                            sumData[col-1] += temp;
-                        } catch (Exception e) {
-                            rowTemp = row;
-                            row = rowTotal;
-                            break;
-                        }
-                    }
-                }
-
-                for(int i = 0; i < sumData.length; i++) {
-                    meanData[i] = sumData[i]/(rowTemp - rowIndexStart); //2114 rowTotal - rowIndexStart + 1
-                    tempStr = tempStr + (columns[i] + ": " + meanData[i]);
-                }
-            }
-        }
-        return tempStr;
     }
 }
