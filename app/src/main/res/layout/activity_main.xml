@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
@@ -14,5 +15,58 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/choiceyear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal"
+        app:layout_constraintVertical_bias="0.120000005" >
+
+        <RadioButton
+            android:id="@+id/btu2017"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="2017" />
+
+        <RadioButton
+            android:id="@+id/btu2018"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2018" />
+
+        <RadioButton
+            android:id="@+id/btu2019"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2019" />
+
+        <RadioButton
+            android:id="@+id/btu2020"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2020" />
+
+        <RadioButton
+            android:id="@+id/btu2021"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2021" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/openMapBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="open map"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
