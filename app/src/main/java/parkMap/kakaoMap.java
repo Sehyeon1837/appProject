@@ -1,11 +1,13 @@
-package com.example.appproject;
+package parkMap;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -15,11 +17,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.appproject.R;
+
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocationEventListener, MapView.MapViewEventListener{
 
@@ -27,8 +31,10 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
     private ViewGroup mapViewContainer;
     private ParkCsvReader parkCsvReader;
     private LocationManager locationManager;
-    Button button;
+    Button closeButton;
+    Button listButton;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,8 +73,8 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
         MapPOIItem marker = new MapPOIItem();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        parkCsvReader = new ParkCsvReader(location.getLatitude(), location.getLongitude());
-        List<String> parkInfo = parkCsvReader.readCsv(this); // 거리 순으로 정렬 된 공원 정보
+        parkCsvReader = new ParkCsvReader(location);
+        ArrayList<String> parkInfo = parkCsvReader.readCsv(this); // 거리 순으로 정렬 된 공원 정보
         // 가까운 공원 10개 마커 띄우기
         for (int i=0; i<10; i++) {
             String array[] = parkInfo.get(i).split(",");
@@ -81,11 +87,23 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
         }
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(location.getLatitude(), location.getLongitude()), true); // 사용자의 현재 위치로 화면 이동
 
-        button = findViewById(R.id.closeBtn);
-        button.setOnClickListener(new View.OnClickListener() {
+        closeButton = findViewById(R.id.closeBtn);
+        listButton = findViewById(R.id.listBtn);
+        closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        listButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), park_List_View.class);
+                parkInfo.add(Double.toString(location.getLatitude()));
+                parkInfo.add(Double.toString(location.getLongitude()));
+                intent.putExtra("parkInfo", parkInfo);
+                startActivity(intent); // 리스트 뷰 띄우기
             }
         });
     }

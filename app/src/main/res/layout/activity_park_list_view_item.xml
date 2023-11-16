@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="parkMap.parkListViewItem"
+    android:id="@+id/parkList"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/listViewItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/parkImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:src="@drawable/dice1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/parkName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="parkName" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/parkDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="distance" />
+
+                <TextView
+                    android:id="@+id/parkAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="address" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/parkFacility"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="facility" />
+
+            <TextView
+                android:id="@+id/parkPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="phoneNumber" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/naviBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Navi" />
+    </LinearLayout>
+</LinearLayout>

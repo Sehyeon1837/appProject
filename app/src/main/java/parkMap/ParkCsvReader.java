@@ -1,10 +1,12 @@
-package com.example.appproject;
+package parkMap;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.location.Location;
 import android.os.Build;
 import android.util.Log;
 
+import com.example.appproject.R;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
@@ -22,33 +24,34 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ParkCsvReader {
-    static double userLatitude;
-    static double userLongitude;
-    public ParkCsvReader(double latitude, double longitude){
-        userLatitude = latitude;
-        userLongitude = longitude;
+    static Location location = new Location("User");
+    public ParkCsvReader(Location userLocation){
+        location = userLocation;
     }
-    public static List<String> readCsv(Context context) {
+    public static ArrayList<String> readCsv(Context context) {
         InputStream is = context.getResources().openRawResource(R.raw.jeonju_park_info);
         BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-        List<String> parkInfo = new ArrayList<String>();
-        List<String> parkNum = new ArrayList<String>(); // 공원 관리번호
-        List<Double> Latitude = new ArrayList<Double>(); // 위도
-        List<Double> Longitude = new ArrayList<Double>(); // 경도
-        List<Double> Distance = new ArrayList<Double>(); // 사용자의 위치와 공원의 직선 거리
+        ArrayList<String> parkInfo = new ArrayList<String>();
+        ArrayList<Double> Latitude = new ArrayList<Double>(); // 위도
+        ArrayList<Double> Longitude = new ArrayList<Double>(); // 경도
+        ArrayList<Double> Distance = new ArrayList<Double>(); // 사용자의 위치와 공원의 직선 거리
         String info = new String();
-
+        Double distance;
+        Location parkLocation = new Location("park");
 
         try {
             String line = "";
             info = br.readLine();
             while ((line = br.readLine()) != null) {
-                parkInfo.add(line);
                 String array[] = line.split(",");
-                parkNum.add(array[0]); // parkNum에 공원 관리번호 저장
                 Latitude.add(Double.parseDouble(array[5])); // Latitude에 공원 위도 저장
                 Longitude.add(Double.parseDouble(array[6])); // Longitude에 공원 경도 저장
-                Distance.add(Math.sqrt(Math.pow((userLatitude - Latitude.get(Latitude.size()-1)), 2) + Math.pow((userLongitude - Longitude.get(Longitude.size()-1)), 2)));
+                parkLocation.setLatitude(Latitude.get(Latitude.size()-1));
+                parkLocation.setLongitude(Longitude.get(Longitude.size()-1));
+                distance = (double)location.distanceTo(parkLocation);
+                Distance.add(Math.floor(distance));
+                line += "," + Distance.get(Distance.size()-1).intValue();
+                parkInfo.add(line);
             }
 
 
@@ -78,10 +81,10 @@ public class ParkCsvReader {
 
 
     // 거리순 정렬
-    public static void sortDistanceByQuickSort(List parkInfo, double[] arr) {
+    public static void sortDistanceByQuickSort(ArrayList parkInfo, double[] arr) {
         quickSort(parkInfo, arr, 0, arr.length - 1);
     }
-    public static void quickSort(List parkInfo, double[] arr, int left, int right) {
+    public static void quickSort(ArrayList parkInfo, double[] arr, int left, int right) {
         int part = partition(parkInfo, arr, left, right);
         if (left < part - 1) {
             quickSort(parkInfo, arr, left, part - 1);
@@ -90,7 +93,7 @@ public class ParkCsvReader {
             quickSort(parkInfo, arr, part, right);
         }
     }
-    public static int partition(List parkInfo, double[] arr, int left, int right) {
+    public static int partition(ArrayList parkInfo, double[] arr, int left, int right) {
         double pivot = arr[(left + right) / 2];
         while (left <= right) {
             while (arr[left] < pivot) {
@@ -108,7 +111,7 @@ public class ParkCsvReader {
         return left;
     }
 
-    private static void swap(List parkInfo, double[] arr, int left, int right) {
+    private static void swap(ArrayList parkInfo, double[] arr, int left, int right) {
         double tempDouble;
         String tempString;
         tempDouble = arr[left];
