@@ -15,6 +15,7 @@
         <item>BackUp_12.덕진 체련공원</item>
         <item>BackUp_13.효자3동 주민센터</item>
         <item>BackUp_14.효자4동 주민센터</item>
+        <item>BackUp_14.효자5동 주민센터</item>
         <item>BackUp_15.서신 도내기샘공원</item>
         <item>BackUp_16.인후3동 평생학습센터</item>
         <item>BackUp_17.조촌동 주민센터</item>
@@ -27,4 +28,47 @@
         <item>습도</item>
         <item>기압</item>
     </string-array>
+    <string-array name="lat_list">
+        <item>35.8385</item>
+        <item>35.8057</item>
+        <item>35.8649</item>
+        <item>35.8026</item>
+        <item>35.8374</item>
+        <item>35.7914</item>
+        <item>35.8146</item>
+        <item>35.8116</item>
+        <item>35.8760</item>
+        <item>35.8454</item>
+        <item>35.8675</item>
+        <item>35.8531</item>
+        <item>35.8066</item>
+        <item>35.8039</item>
+        <item>35.8177</item>
+        <item>35.8317</item>
+        <item>35.8280</item>
+        <item>35.8745</item>
+        <item>35.8464</item>
+    </string-array>
+    <string-array name="lon_list">
+        <item>127.1430</item>
+        <item>127.1487</item>
+        <item>127.1156</item>
+        <item>127.1061</item>
+        <item>127.1567</item>
+        <item>127.1348</item>
+        <item>127.1249</item>
+        <item>127.1625</item>
+        <item>127.1061</item>
+        <item>127.1206</item>
+        <item>127.1476</item>
+        <item>127.1403</item>
+        <item>127.1103</item>
+        <item>127.0978</item>
+        <item>127.1015</item>
+        <item>127.1167</item>
+        <item>127.1613</item>
+        <item>127.0692</item>
+        <item>127.0631</item>
+    </string-array>
+
 </resources>
