@@ -16,8 +16,8 @@ import java.util.ArrayList;
 
 
 public class parkListViewAdapter extends BaseAdapter {
-    private String latitude;
-    private String longitude;
+    private Double latitude;
+    private Double longitude;
     private LinearLayout listViewItem;
     private ImageView parkImage;
     private TextView parkName;
@@ -27,7 +27,7 @@ public class parkListViewAdapter extends BaseAdapter {
     private TextView parkPhoneNumber;
     private Button naviBtn;
     private ArrayList<parkListViewItem> parkListViewItemArrayList = new ArrayList<parkListViewItem>();
-    public parkListViewAdapter(String latitude, String longitude){
+    public parkListViewAdapter(Double latitude, Double longitude){
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -77,7 +77,7 @@ public class parkListViewAdapter extends BaseAdapter {
         naviBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "kakaomap://route?sp=" + longitude + "," + latitude + "&ep=" + parkListViewItem.getLatitude() + "," + parkListViewItem.getLongitude() + "&by=FOOT";
+                String url = "kakaomap://route?sp=" + latitude + "," + longitude + "&ep=" + parkListViewItem.getLatitude() + "," + parkListViewItem.getLongitude() + "&by=FOOT";
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 context.startActivity(intent);
             }

@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -72,7 +73,9 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
         //마커 띄우기
         MapPOIItem marker = new MapPOIItem();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) == null ?
+                locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) : locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        // GPS로 위치 정보를 못받을 경우 네트워크로 위치 정보를 받아옴
         parkCsvReader = new ParkCsvReader(location);
         ArrayList<String> parkInfo = parkCsvReader.readCsv(this); // 거리 순으로 정렬 된 공원 정보
         // 가까운 공원 10개 마커 띄우기
@@ -195,4 +198,6 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
     public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
 
     }
+
+
 }

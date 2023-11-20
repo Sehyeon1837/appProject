@@ -17,8 +17,8 @@ import java.util.ArrayList;
 
 public class park_List_View extends AppCompatActivity {
     Button closeButton;
-    private String latitude;
-    private String longitude;
+    private Double latitude;
+    private Double longitude;
     private ListView listView;
     private parkListViewAdapter adapter;
     @Override
@@ -27,8 +27,8 @@ public class park_List_View extends AppCompatActivity {
         setContentView(R.layout.activity_park_list_view);
 
         ArrayList<String> parkInfo = (ArrayList<String>)getIntent().getSerializableExtra("parkInfo");
-        this.longitude = parkInfo.get(parkInfo.size()-1); parkInfo.remove(parkInfo.size()-1);
-        this.latitude = parkInfo.get(parkInfo.size()-1); parkInfo.remove(parkInfo.size()-1);
+        this.longitude = Double.parseDouble(parkInfo.get(parkInfo.size()-1)); parkInfo.remove(parkInfo.size()-1);
+        this.latitude = Double.parseDouble(parkInfo.get(parkInfo.size()-1)); parkInfo.remove(parkInfo.size()-1);
         closeButton = findViewById(R.id.closeBtn);
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
