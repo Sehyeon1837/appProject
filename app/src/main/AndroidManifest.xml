@@ -23,10 +23,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCgJOTKo2CjDjHJJ2Jh-05cjAUqlvKrqJs"
             />
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="97d8440d186b0b6785024845e38f9f6d" />
 
-        <activity
-            android:name="parkMap.parkListViewItem"
-            android:exported="false" />
         <activity
             android:name="parkMap.park_List_View"
             android:exported="false" />
@@ -42,10 +42,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="com.kakao.sdk.AppKey"
-            android:value="97d8440d186b0b6785024845e38f9f6d" />
     </application>
 
 </manifest>
