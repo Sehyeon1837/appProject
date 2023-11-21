@@ -73,7 +73,7 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
         //마커 띄우기
         MapPOIItem marker = new MapPOIItem();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) == null ?
+        Location location = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ?
                 locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) : locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         // GPS로 위치 정보를 못받을 경우 네트워크로 위치 정보를 받아옴
         parkCsvReader = new ParkCsvReader(location);
