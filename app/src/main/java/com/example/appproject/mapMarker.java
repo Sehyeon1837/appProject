@@ -41,6 +41,7 @@ public class mapMarker implements OnMapReadyCallback {
         mMap = googleMap;
         LatLng JEONJU = new LatLng(35.8412, 127.1318);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(JEONJU,16));
+        mMap.getUiSettings().setZoomControlsEnabled(true); //https://luminitworld.tistory.com/61
 
         ChecktheMarkers();
         setCircle();
@@ -50,8 +51,6 @@ public class mapMarker implements OnMapReadyCallback {
         mMap.clear();
         ChecktheMarkers();
         setCircle();
-        //changeSnippetMarker();
-        //changeCircle();
     }
 
     private void ChecktheMarkers() {
@@ -79,15 +78,6 @@ public class mapMarker implements OnMapReadyCallback {
         }
     }
 
-    private void changeSnippetMarker() {
-        for(int i = 0; i < MarkerOptionsList.length; i++) {
-            temp = readfile.getDatas(i);
-            if(temp == "")
-                temp = "해당 년도의 데이터가 존재하지 않습니다";
-            MarkerOptionsList[i].snippet(temp);
-        }
-    }
-
     private void setCircle() {
         for(int i = 0; i < latlist.length; i++) {
             double lat = Double.parseDouble(latlist[i]);
@@ -103,11 +93,6 @@ public class mapMarker implements OnMapReadyCallback {
 
             mMap.addCircle(circle1km);
         }
-    }
-
-    private void changeCircle() {
-        for(int i = 0; i < CircleOptionsList.length; i++)
-            CircleOptionsList[i].fillColor(getColor(i));
     }
 
     private int getColor(int index) {
