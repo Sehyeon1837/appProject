@@ -2,15 +2,31 @@ package com.example.appproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
+import parkMap.kakaoMap;
 import com.google.android.gms.maps.SupportMapFragment;
 
 public class MainActivity extends AppCompatActivity {
     private RadioGroup choiceYear;
+    private Button mapBtn;
     readfiles readfile;
     mapMarker mapmarker;
     String inputYear;
@@ -30,6 +46,15 @@ public class MainActivity extends AppCompatActivity {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapmarker = new mapMarker(res, mapFragment, readfile);
+
+        mapBtn = findViewById(R.id.openMapBtn);
+        mapBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), kakaoMap.class);
+                startActivity(intent); // 지도 뷰 띄우기
+            }
+        });
 
         choiceYear.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

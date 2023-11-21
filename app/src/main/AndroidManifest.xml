@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppProject"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
         <meta-data
@@ -20,6 +24,15 @@
             android:value="AIzaSyCgJOTKo2CjDjHJJ2Jh-05cjAUqlvKrqJs"
             />
 
+        <activity
+            android:name="parkMap.parkListViewItem"
+            android:exported="false" />
+        <activity
+            android:name="parkMap.park_List_View"
+            android:exported="false" />
+        <activity
+            android:name="parkMap.kakaoMap"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -29,6 +42,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="97d8440d186b0b6785024845e38f9f6d" />
     </application>
 
 </manifest>
