@@ -1,14 +1,9 @@
 package parkMap;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.view.View;
-import android.widget.Button;
-
 public class parkListViewItem {
     private String iconDrawble;
     private String parkName;
+    private String parkArea;
     private String parkDistance;
     private String parkAddress;
     private String parkFacility;
@@ -18,6 +13,9 @@ public class parkListViewItem {
 
     public void setParkName(String parkName){
         this.parkName = parkName;
+    }
+    public void setParkArea(String parkArea){
+        this.parkArea = parkArea+"m";
     }
     public void setParkDistance(String parkDistance) {this.parkDistance = parkDistance+"m"; }
     public void setParkAddress(String parkAddress) { this.parkAddress = parkAddress; }
@@ -30,6 +28,7 @@ public class parkListViewItem {
     }
 
     public String getParkName() {return this.parkName;}
+    public String getParkArea() {return this.parkArea;}
     public String getParkDistance(){ return this.parkDistance;}
     public String getParkAddress() {return this.parkAddress;}
     public String getParkFacility() {return this.parkFacility;}

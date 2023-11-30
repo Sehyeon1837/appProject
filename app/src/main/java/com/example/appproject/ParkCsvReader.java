@@ -1,42 +1,35 @@
-package parkMap;
+package com.example.appproject;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.location.Location;
-import android.os.Build;
-import android.util.Log;
-
-import com.example.appproject.R;
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
 
 public class ParkCsvReader {
     static Location location = new Location("User");
     public ParkCsvReader(Location userLocation){
         location = userLocation;
     }
-    public static ArrayList<String> readCsv(Context context) {
+    public static ArrayList<ArrayList> readCsv(Context context) {
         InputStream is = context.getResources().openRawResource(R.raw.jeonju_park_info);
         BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+        ArrayList<ArrayList> parkInfoArray = new ArrayList<ArrayList>();
         ArrayList<String> parkInfo = new ArrayList<String>();
-        ArrayList<Double> Latitude = new ArrayList<Double>(); // 위도
-        ArrayList<Double> Longitude = new ArrayList<Double>(); // 경도
+        ArrayList<String> parkInfoDistance = new ArrayList<String>();
+        ArrayList<String> parkInfoArea = new ArrayList<String>();
+        ArrayList<String> parkInfoScore = new ArrayList<String>();
+        ArrayList<Double> Area = new ArrayList<Double>();
+        ArrayList<Double> Score = new ArrayList<Double>();
+        ArrayList<Integer> facilityNum = new ArrayList<Integer>();
         ArrayList<Double> Distance = new ArrayList<Double>(); // 사용자의 위치와 공원의 직선 거리
         String info = new String();
-        Double distance;
         Location parkLocation = new Location("park");
 
         try {
@@ -44,23 +37,62 @@ public class ParkCsvReader {
             info = br.readLine();
             while ((line = br.readLine()) != null) {
                 String array[] = line.split(",");
-                Latitude.add(Double.parseDouble(array[5])); // Latitude에 공원 위도 저장
-                Longitude.add(Double.parseDouble(array[6])); // Longitude에 공원 경도 저장
-                parkLocation.setLatitude(Latitude.get(Latitude.size()-1));
-                parkLocation.setLongitude(Longitude.get(Longitude.size()-1));
-                distance = (double)location.distanceTo(parkLocation);
-                Distance.add(Math.floor(distance));
+                parkLocation.setLatitude(Double.parseDouble(array[5]));
+                parkLocation.setLongitude(Double.parseDouble(array[6]));
+                Distance.add((double)location.distanceTo(parkLocation));
                 line += "," + Distance.get(Distance.size()-1).intValue();
                 parkInfo.add(line);
             }
-
 
             //거리 순 정렬
             double[] distanceArray = Distance.stream()
                     .mapToDouble(Double::doubleValue)
                     .toArray();
-            sortDistanceByQuickSort(parkInfo, distanceArray);
+            sortParkInfoByQuickSort(parkInfo, distanceArray);
 
+            int maxFacilityNum = 0;
+            Double maxArea = 0.0;
+            for(int i=0; i<10; i++){
+                String array[] = parkInfo.get(i).split(",");
+                parkInfoDistance.add(parkInfo.get(i));
+                parkInfoArea.add(parkInfo.get(i));
+                parkInfoScore.add(parkInfo.get(i));
+                Area.add(Double.parseDouble(array[7]));
+                int tempFacilityNum = 0;
+                for(int j=8; j<13; j++){
+                    if(array[j] != "") {
+                        tempFacilityNum += array[j].length() - array[j].replace("+", "").length() + 1;
+                        if(tempFacilityNum > maxFacilityNum) maxFacilityNum = tempFacilityNum;
+                    }
+                }
+                facilityNum.add(tempFacilityNum);
+            }
+
+            //가까운 공원 10개 면적 순 정렬
+            double[] areaArray = Area.stream()
+                    .mapToDouble(Double::doubleValue)
+                    .toArray();
+            sortParkInfoByQuickSort(parkInfoArea, areaArray);
+            Collections.reverse(parkInfoArea);
+
+            // 점수 계산
+            for(int i=0; i<10; i++){
+                String array[] = parkInfoScore.get(i).split(",");
+                Score.add(distanceArray[0] / Double.parseDouble(array[17]) * 75.0
+                    + Double.parseDouble(array[7]) / areaArray[9] * 15.0
+                    + facilityNum.get(i) / maxFacilityNum * 10.0);
+            }
+
+            //가까운 공원 10개 점수 순 정렬
+            double[] scoreArray = Score.stream()
+                    .mapToDouble(Double::doubleValue)
+                    .toArray();
+            sortParkInfoByQuickSort(parkInfoScore, scoreArray);
+            Collections.reverse(parkInfoScore);
+
+            parkInfoArray.add(parkInfoDistance);
+            parkInfoArray.add(parkInfoArea);
+            parkInfoArray.add(parkInfoScore);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -76,12 +108,11 @@ public class ParkCsvReader {
             }
         }
 
-        return parkInfo; // 거리 순으로 정렬된 리스트 반환
+        return parkInfoArray; // 거리 순, 면적 순, 추천 순으로 정렬된 리스트 반환
     }
 
-
-    // 거리순 정렬
-    public static void sortDistanceByQuickSort(ArrayList parkInfo, double[] arr) {
+    // 공원 정보 정렬
+    public static void sortParkInfoByQuickSort(ArrayList parkInfo, double[] arr) {
         quickSort(parkInfo, arr, 0, arr.length - 1);
     }
     public static void quickSort(ArrayList parkInfo, double[] arr, int left, int right) {

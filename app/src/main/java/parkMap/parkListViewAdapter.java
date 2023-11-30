@@ -21,6 +21,7 @@ public class parkListViewAdapter extends BaseAdapter {
     private LinearLayout listViewItem;
     private ImageView parkImage;
     private TextView parkName;
+    private TextView parkArea;
     private TextView parkDistance;
     private TextView parkAddress;
     private TextView parkFacility;
@@ -49,26 +50,30 @@ public class parkListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final int pos = position;
         final Context context = parent.getContext();
 
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.activity_park_list_view_item, parent, false);
+            Holder holder = new Holder(convertView);
+            convertView.setTag(holder);
         }
 
-        listViewItem = (LinearLayout) convertView.findViewById(R.id.listViewItem);
-        parkImage = (ImageView) convertView.findViewById(R.id.parkImage);
-        parkName = (TextView) convertView.findViewById(R.id.parkName);
-        parkDistance = (TextView) convertView.findViewById(R.id.parkDistance);
-        parkAddress = (TextView) convertView.findViewById(R.id.parkAddress);
-        parkFacility = (TextView) convertView.findViewById(R.id.parkFacility);
-        parkPhoneNumber = (TextView) convertView.findViewById(R.id.parkPhoneNumber);
-        naviBtn = (Button) convertView.findViewById(R.id.naviBtn);
+        Holder holder = (Holder) convertView.getTag();
+        listViewItem = (LinearLayout) holder.listViewItem;
+        parkImage = (ImageView) holder.parkImage;
+        parkName = (TextView) holder.parkName;
+        parkArea = (TextView) holder.parkArea;
+        parkDistance = (TextView) holder.parkDistance;
+        parkAddress = (TextView) holder.parkAddress;
+        parkFacility = (TextView) holder.parkFacility;
+        parkPhoneNumber = (TextView) holder.parkPhoneNumber;
+        naviBtn = (Button) holder.naviBtn;
 
         parkListViewItem parkListViewItem = parkListViewItemArrayList.get(position);
 
         parkName.setText(parkListViewItem.getParkName());
+        parkArea.setText(parkListViewItem.getParkArea());
         parkDistance.setText(parkListViewItem.getParkDistance());
         parkAddress.setText(parkListViewItem.getParkAddress());
         parkFacility.setText(parkListViewItem.getParkFacility());
@@ -99,6 +104,7 @@ public class parkListViewAdapter extends BaseAdapter {
         parkListViewItem item = new parkListViewItem();
         String array[] = info.split(",");
         item.setParkName(array[1]);
+        item.setParkArea(array[7]);
         item.setParkDistance(array[17]);
         item.setParkAddress(array[3]);
         item.setParkFacility(array[8] + "\n" + array[9] + "\n" + array[10] + "\n" + array[11] + "\n" + array[12]);
@@ -107,5 +113,10 @@ public class parkListViewAdapter extends BaseAdapter {
         item.setLongitude(array[6]);
 
         parkListViewItemArrayList.add(item);
+    }
+
+    public void resetItem(){
+        parkListViewItem item = new parkListViewItem();
+        parkListViewItemArrayList.clear();
     }
 }
