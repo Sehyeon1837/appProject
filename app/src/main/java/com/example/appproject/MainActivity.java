@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapmarker = new mapMarker(res, mapFragment, readfile);
+        mapmarker = new mapMarker(res, mapFragment, readfile, MainActivity.this);
 
         mapBtn = findViewById(R.id.openMapBtn);
         mapBtn.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     inputYear = "2021";
                 }
                 readfile.setYear(inputYear);
-                mapmarker.changeYear();
+                mapmarker.changeYear(inputYear);
             }
         });
     }

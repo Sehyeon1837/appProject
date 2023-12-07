@@ -1,12 +1,18 @@
 package com.example.appproject;
 
+import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -17,17 +23,20 @@ public class mapMarker implements OnMapReadyCallback {
     Resources res;
     private SupportMapFragment mapFragment;
     private String[] latlist, lonlist, area;
-    private String str, resultFac, temp;
+    private String str, resultFac, temp, year;
     private double tempUHI;
     private MarkerOptions[] MarkerOptionsList;
     private CircleOptions[] CircleOptionsList;
-    public mapMarker(Resources res, SupportMapFragment mapFragment, readfiles readfile) {
+    Activity mainAct;
+    public mapMarker(Resources res, SupportMapFragment mapFragment, readfiles readfile, Activity mainAct) {
+        year = "2017";
         area = new String[19];
         this.mapFragment = mapFragment;
         mapFragment.getMapAsync(this);
 
         this.res = res;
         this.readfile = readfile;
+        this.mainAct = mainAct;
 
         latlist = res.getStringArray(R.array.lat_list);
         lonlist = res.getStringArray(R.array.lon_list);
@@ -45,9 +54,22 @@ public class mapMarker implements OnMapReadyCallback {
 
         ChecktheMarkers();
         setCircle();
+//        mMap.setOnCircleClickListener(new GoogleMap.OnCircleClickListener() {
+//            @Override
+//            public void onCircleClick(@NonNull Circle circle) {
+//                String sss = circle.getId().toString().substring(2);
+//                int iii = Integer.parseInt(sss);
+//                double ddd = readfile.getUHITemp(iii);
+//                Toast.makeText(mainAct, String.format("%.2f", ddd), Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
-    public void changeYear() {
+    public void changeYear(String Newyear) {
+        if(year == Newyear) //같은 년도로 접근시 map 초기화X
+            return;
+        year = Newyear;
+
         mMap.clear();
         ChecktheMarkers();
         setCircle();
@@ -68,7 +90,7 @@ public class mapMarker implements OnMapReadyCallback {
 
             temp = readfile.getDatas(i);
 
-            if(temp == "")
+            if(temp == "" || temp == "0")
                 temp = "해당 년도의 데이터가 존재하지 않습니다";
 
             markerOptions.snippet(temp);
@@ -87,7 +109,8 @@ public class mapMarker implements OnMapReadyCallback {
             CircleOptions circle1km = new CircleOptions().center(LOCATION)
                     .radius(500)
                     .fillColor(getColor(i))
-                    .strokeWidth(0f);
+                    .strokeWidth(0f)
+                    .clickable(true);
 
             CircleOptionsList[i] = circle1km;
 

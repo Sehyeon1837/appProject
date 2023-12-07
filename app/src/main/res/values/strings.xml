@@ -22,11 +22,8 @@
         <item>BackUp_18.혁신 수질복원센터</item>
     </string-array>
     <string-array name="columns_name">
-        <item>풍향</item>
-        <item>풍속</item>
         <item>온도</item>
         <item>습도</item>
-        <item>기압</item>
     </string-array>
     <string-array name="lat_list">
         <item>35.8385</item>
