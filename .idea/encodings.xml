@@ -4,6 +4,6 @@
     <file url="file://$PROJECT_DIR$/app/src/main/assets/jeonju_park_info.csv" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/app/src/main/assets/jeonju_park_info3.csv" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/raw/jeonju_park_info2.csv" charset="x-windows-949" />
-    <file url="PROJECT" charset="x-windows-949" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

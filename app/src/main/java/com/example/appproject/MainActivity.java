@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import parkMap.kakaoMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private RadioGroup choiceYear;
