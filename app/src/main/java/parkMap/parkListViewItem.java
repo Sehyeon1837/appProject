@@ -1,7 +1,11 @@
 package parkMap;
 
+import static java.sql.Types.NULL;
+
+import android.content.res.Resources;
+
 public class parkListViewItem {
-    private String iconDrawble;
+    private Integer iconId;
     private String parkName;
     private String parkArea;
     private String parkDistance;
@@ -23,8 +27,15 @@ public class parkListViewItem {
     public void setParkPhoneNumber(String parkPhoneNumber) {this.parkPhoneNumber = parkPhoneNumber; }
     public void setLatitude(String latitude) {this.latitude = latitude;}
     public void setLongitude(String longitude){this.longitude = longitude;}
-    public void setIcon(String iconRes) {
-        iconDrawble = iconRes;
+    public void setIcon(String iconRes, Resources resources) {
+        int index = Integer.parseInt(iconRes);
+        String src = "park00";
+        if(index<10) src += "00" + index;
+        else if(index<100) src += "0" + index;
+        else src += index;
+        int id = resources.getIdentifier(src, "drawable", "com.example.appproject");
+        if(id == NULL) this.iconId = resources.getIdentifier("@drawable/park00000", "drawable", "com.example.appproject" );
+        else this.iconId = resources.getIdentifier(src, "drawable", "com.example.appproject" );
     }
 
     public String getParkName() {return this.parkName;}
@@ -35,7 +46,7 @@ public class parkListViewItem {
     public String getParkPhoneNumber() {return this.parkPhoneNumber;}
     public String getLatitude() {return this.latitude;}
     public String getLongitude(){return this.longitude;}
-    public String getIcon(){
-        return this.iconDrawble;
+    public Integer getIcon(){
+        return this.iconId;
     }
 }

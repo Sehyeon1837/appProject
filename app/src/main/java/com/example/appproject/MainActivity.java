@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         choiceYear = findViewById(R.id.choiceyear);
         text = findViewById(R.id.text);
-        readExcel();
+        //readExcel();
 
         // 권한ID를 가져옵니다
         int permission = ContextCompat.checkSelfPermission(this,

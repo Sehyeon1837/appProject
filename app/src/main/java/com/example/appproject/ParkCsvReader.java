@@ -41,6 +41,7 @@ public class ParkCsvReader {
                 parkLocation.setLongitude(Double.parseDouble(array[6]));
                 Distance.add((double)location.distanceTo(parkLocation));
                 line += "," + Distance.get(Distance.size()-1).intValue();
+                line += "," + Distance.size();
                 parkInfo.add(line);
             }
 

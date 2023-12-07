@@ -67,7 +67,7 @@ public class park_List_View extends AppCompatActivity {
             }
         });
 
-        adapter = new parkListViewAdapter(latitude, longitude);
+        adapter = new parkListViewAdapter(latitude, longitude, getResources());
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(adapter);
     }

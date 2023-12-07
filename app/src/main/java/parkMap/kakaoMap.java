@@ -252,7 +252,10 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
         @Override
         public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
             String[] array = mapPOIItem.getItemName().split(",");
-            String url = "kakaomap://search?q=" + array[1] + "&p=" + latitude + "," + longitude;
+            //String url = "kakaomap://search?q=" + array[1] + "&p=" + latitude + "," + longitude;
+            //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            //startActivity(intent);
+            String url = "kakaomap://route?sp=" + latitude + "," + longitude + "&ep=" + array[5] + "," + array[6] + "&by=FOOT";
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
         }
