@@ -54,15 +54,17 @@ public class mapMarker implements OnMapReadyCallback {
 
         ChecktheMarkers();
         setCircle();
-//        mMap.setOnCircleClickListener(new GoogleMap.OnCircleClickListener() {
-//            @Override
-//            public void onCircleClick(@NonNull Circle circle) {
-//                String sss = circle.getId().toString().substring(2);
-//                int iii = Integer.parseInt(sss);
-//                double ddd = readfile.getUHITemp(iii);
-//                Toast.makeText(mainAct, String.format("%.2f", ddd), Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
+        mMap.setOnCircleClickListener(new GoogleMap.OnCircleClickListener() {
+            @Override
+            public void onCircleClick(@NonNull Circle circle) {
+                String circleid = circle.getId().toString().substring(2);
+                int idToint = Integer.parseInt(circleid);
+                idToint = idToint % 19;
+                double idTodouble = readfile.getUHITemp(idToint);
+                Toast.makeText(mainAct, String.format("%.2f", idTodouble), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void changeYear(String Newyear) {

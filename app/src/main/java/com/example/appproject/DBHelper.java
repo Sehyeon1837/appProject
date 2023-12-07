@@ -41,6 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL("drop table " + DB_NAME);
             onCreate(db);
         }
+
     }
 
     public List<DataModel> getDataByYear(String year) {

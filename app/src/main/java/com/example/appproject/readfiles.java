@@ -61,19 +61,6 @@ public class readfiles extends MainActivity {
         }
     }
 
-    public void setDataFromDB(String inputData, String inputUHI) { //split
-        String[] strData = inputData.split("#");
-        String[] strUHI = inputUHI.split("#");
-
-        for(int i = 0; i < datas.length; i++)
-            datas[i] = strData[i];
-
-        for(int i = 0; i < UHITemp.length; i++) {
-            double tempuhi = Double.parseDouble(strUHI[i]);
-            UHITemp[i] = tempuhi;
-        }
-    }
-
     public String getDatas(int index) {
         return datas[index];
     }
