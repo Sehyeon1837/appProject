@@ -108,29 +108,6 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
         });
     }
 
-    // 권한 체크 이후로직
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grandResults) {
-        // READ_PHONE_STATE의 권한 체크 결과를 불러온다
-        super.onRequestPermissionsResult(requestCode, permissions, grandResults);
-        if (requestCode == 1000) {
-            boolean check_result = true;
-
-            // 모든 퍼미션을 허용했는지 체크
-            for (int result : grandResults) {
-                if (result != PackageManager.PERMISSION_GRANTED) {
-                    check_result = false;
-                    break;
-                }
-            }
-
-            // 권한 체크에 동의를 하지 않으면 안드로이드 종료
-            if (check_result == false) {
-                finish();
-            }
-        }
-    }
-
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint mapPoint, float v) {
 
@@ -252,9 +229,6 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
         @Override
         public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
             String[] array = mapPOIItem.getItemName().split(",");
-            //String url = "kakaomap://search?q=" + array[1] + "&p=" + latitude + "," + longitude;
-            //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            //startActivity(intent);
             String url = "kakaomap://route?sp=" + latitude + "," + longitude + "&ep=" + array[5] + "," + array[6] + "&by=FOOT";
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
