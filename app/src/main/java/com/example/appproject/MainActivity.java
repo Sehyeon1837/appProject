@@ -12,11 +12,16 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
 import parkMap.kakaoMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -69,24 +74,29 @@ public class MainActivity extends AppCompatActivity {
         }
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         // GPS로 위치 정보를 못받을 경우 네트워크로 위치 정보를 받아옴
-        location = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ?
-                locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) : locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        parkCsvReader = new ParkCsvReader(location);
-        ArrayList<ArrayList> parkInfoArray = parkCsvReader.readCsv(this);
+//        location = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ?
+//                locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) : locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//        parkCsvReader = new ParkCsvReader(location);
+//        ArrayList<ArrayList> parkInfoArray = parkCsvReader.readCsv(this);
+//
+//        mapBtn = findViewById(R.id.openMapBtn);
+//        mapBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), kakaoMap.class);
+//                ArrayList<String> array = new ArrayList<String>();
+//                array.add(Double.toString(location.getLatitude()));
+//                array.add(Double.toString(location.getLongitude()));
+//                parkInfoArray.add(array);
+//                intent.putExtra("parkInfo", parkInfoArray);
+//                startActivity(intent); // 지도 뷰 띄우기
+//            }
+//        });
 
-        mapBtn = findViewById(R.id.openMapBtn);
-        mapBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), kakaoMap.class);
-                ArrayList<String> array = new ArrayList<String>();
-                array.add(Double.toString(location.getLatitude()));
-                array.add(Double.toString(location.getLongitude()));
-                parkInfoArray.add(array);
-                intent.putExtra("parkInfo", parkInfoArray);
-                startActivity(intent); // 지도 뷰 띄우기
-            }
-        });
+//        if(location != null) {
+//            LatLng newloc = new LatLng(location.getLatitude(), location.getLongitude());
+//            mapmarker.changeCamera(newloc);
+//        }
 
         choiceYear.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

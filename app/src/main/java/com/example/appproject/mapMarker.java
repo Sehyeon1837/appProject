@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -28,6 +29,7 @@ public class mapMarker implements OnMapReadyCallback {
     private MarkerOptions[] MarkerOptionsList;
     private CircleOptions[] CircleOptionsList;
     Activity mainAct;
+
     public mapMarker(Resources res, SupportMapFragment mapFragment, readfiles readfile, Activity mainAct) {
         year = "2017";
         area = new String[19];
@@ -63,8 +65,17 @@ public class mapMarker implements OnMapReadyCallback {
                 idToint = idToint % 19;
                 double idTodouble = readfile.getUHITemp(idToint);
                 Toast.makeText(mainAct, String.format("%.2f", idTodouble), Toast.LENGTH_SHORT).show();
+
+                LatLng newloc = new LatLng(Double.parseDouble(latlist[idToint]), Double.parseDouble(lonlist[idToint]));
+                changeCamera(newloc);
             }
         });
+    }
+
+    public void changeCamera(LatLng newloc) {
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(newloc);
+        mMap.animateCamera(cameraUpdate);
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newloc,16));
     }
 
     public void changeYear(String Newyear) {
