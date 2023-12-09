@@ -16,6 +16,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class mapMarker implements OnMapReadyCallback {
@@ -110,6 +111,7 @@ public class mapMarker implements OnMapReadyCallback {
 
             MarkerOptionsList[i] = markerOptions;
             mMap.addMarker(markerOptions);
+
         }
     }
 
