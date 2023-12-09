@@ -15,7 +15,8 @@ public class Holder {
     public TextView parkArea;
     public TextView parkDistance;
     public TextView parkAddress;
-    public TextView parkFacility;
+    public LinearLayout parkFacility;
+    public LinearLayout parkFacility2;
     public TextView parkPhoneNumber;
     public Button naviBtn;
 
@@ -26,7 +27,8 @@ public class Holder {
         parkArea = (TextView) root.findViewById(R.id.parkArea);
         parkDistance = (TextView) root.findViewById(R.id.parkDistance);
         parkAddress = (TextView) root.findViewById(R.id.parkAddress);
-        parkFacility = (TextView) root.findViewById(R.id.parkFacility);
+        parkFacility = (LinearLayout) root.findViewById(R.id.parkFacility);
+        parkFacility2 = (LinearLayout) root.findViewById(R.id.parkFacility2);
         parkPhoneNumber = (TextView) root.findViewById(R.id.parkPhoneNumber);
         naviBtn = (Button) root.findViewById(R.id.naviBtn);
     }

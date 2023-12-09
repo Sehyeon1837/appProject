@@ -10,26 +10,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/listBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/iconlist" />
+
         <Button
             android:id="@+id/closeBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="close" />
 
-        <Button
-            android:id="@+id/listBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="list" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:dropDownWidth="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:dropDownWidth="150dp"
             android:dropDownHeight="wrap_content"
-            android:spinnerMode="dropdown">
-        </Spinner>
+            android:spinnerMode="dropdown" />
+
     </LinearLayout>
 
 

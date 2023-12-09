@@ -1,11 +1,16 @@
 package parkMap;
 
+import static java.sql.Types.NULL;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import android.graphics.Typeface;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -199,13 +206,52 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
         @Override
         public View getCalloutBalloon(MapPOIItem poiItem) {
             String array[] = poiItem.getItemName().split(",");
+            // 말풍선 공원 이미지 ID 얻어오기
+            int index = Integer.parseInt(array[18]);
+            String src = "park00";
+            if(index<10) src += "00" + index;
+            else if(index<100) src += "0" + index;
+            else src += index;
+            int id = getResources().getIdentifier(src, "drawable", "com.example.appproject");
+
+            // 1000m 이상이면 km로 변환
+            Integer distance = Integer.parseInt(array[17]);
+            String Distance;
+            if(distance >= 1000){Distance = (distance/1000) + "." + ((distance - ((distance/1000) * 1000))/100) + "km |";}
+            else Distance = distance + "m |";
+
+            //시설 개수가 6개 이상이면 5개까지만 보여줌
+            String[] ParkFacilityArray = (array[8] + "+" + array[9] + "+" + array[10] + "+" + array[11] + "+" + array[12]).split("\\+");
+            int facilityNum = ParkFacilityArray.length > 5 ? 6 :  ParkFacilityArray.length;
+
+            if(id == NULL) ((ImageView) mCalloutBalloon.findViewById(R.id.parkImage)).setImageResource(getResources().getIdentifier("@drawable/park00000", "drawable", "com.example.appproject" ));
+            else ((ImageView) mCalloutBalloon.findViewById(R.id.parkImage)).setImageResource(getResources().getIdentifier(src, "drawable", "com.example.appproject" ));
             ((TextView) mCalloutBalloon.findViewById(R.id.parkName)).setText(array[1]);
-            ((TextView) mCalloutBalloon.findViewById(R.id.parkArea)).setText(array[7]);
-            ((TextView) mCalloutBalloon.findViewById(R.id.parkDistance)).setText(array[17] + "m");
+            ((TextView) mCalloutBalloon.findViewById(R.id.parkArea)).setText(array[7] + "m^2");
+            ((TextView) mCalloutBalloon.findViewById(R.id.parkDistance)).setText(Distance);
             ((TextView) mCalloutBalloon.findViewById(R.id.parkAddress)).setText(array[3]);
-            ((TextView) mCalloutBalloon.findViewById(R.id.parkFacility)).setText(array[8] + "\n" + array[9] + "\n" + array[10] + "\n" + array[11] + "\n" + array[12]);
             ((TextView) mCalloutBalloon.findViewById(R.id.parkPhoneNumber)).setText(array[15]);
 
+            ((LinearLayout) mCalloutBalloon.findViewById(R.id.parkFacility)).removeAllViews();
+            for(int i=0; i<facilityNum; i++){
+                String facility = ParkFacilityArray[i];
+                if(facility.length() != 0 ){
+                    CardView cardView = new CardView(getApplicationContext());
+                    cardView.setRadius(10);
+                    cardView.setContentPadding(8,3,8,3);
+                    TextView textView = new TextView(getApplicationContext());
+                    if(i == 5) facility = "+ " + (ParkFacilityArray.length - 5) + "개";
+                    textView.setText(facility);
+                    textView.setTextSize(10);
+                    textView.setTypeface(null, Typeface.BOLD);
+                    textView.setId(0);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    params.leftMargin = 15;
+                    cardView.setLayoutParams(params);
+                    cardView.addView(textView);
+                    ((LinearLayout) mCalloutBalloon.findViewById(R.id.parkFacility)).addView(cardView);
+                }
+            }
             return mCalloutBalloon;
         }
 
