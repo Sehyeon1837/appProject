@@ -37,7 +37,6 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
     private ViewGroup mapViewContainer;
     private Double latitude;
     private Double longitude;
-    private Button closeButton;
     private Button listButton;
     private Spinner spinner;
     private ArrayAdapter spnAdapter;
@@ -69,19 +68,11 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
         MapPOIItem[] markers = new MapPOIItem[10];
         drawMarker(markers); // 가까운 공원 10개 마커 띄우기
 
-        closeButton = findViewById(R.id.closeBtn);
         listButton = findViewById(R.id.listBtn);
         spinner = (Spinner) findViewById(R.id.spinner);
         spnAdapter = ArrayAdapter.createFromResource(this, R.array.spinnerItems, android.R.layout.simple_spinner_item);
         spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner.setAdapter(spnAdapter);
-
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         listButton.setOnClickListener(new View.OnClickListener() {
             @Override
