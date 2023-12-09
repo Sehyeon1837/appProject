@@ -1,11 +1,16 @@
 package parkMap;
 
+import static java.sql.Types.NULL;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import android.graphics.Typeface;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -30,7 +37,6 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
     private ViewGroup mapViewContainer;
     private Double latitude;
     private Double longitude;
-    private Button closeButton;
     private Button listButton;
     private Spinner spinner;
     private ArrayAdapter spnAdapter;
@@ -62,19 +68,11 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
         MapPOIItem[] markers = new MapPOIItem[10];
         drawMarker(markers); // 가까운 공원 10개 마커 띄우기
 
-        closeButton = findViewById(R.id.closeBtn);
         listButton = findViewById(R.id.listBtn);
         spinner = (Spinner) findViewById(R.id.spinner);
         spnAdapter = ArrayAdapter.createFromResource(this, R.array.spinnerItems, android.R.layout.simple_spinner_item);
         spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner.setAdapter(spnAdapter);
-
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         listButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,29 +104,6 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
 
             }
         });
-    }
-
-    // 권한 체크 이후로직
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grandResults) {
-        // READ_PHONE_STATE의 권한 체크 결과를 불러온다
-        super.onRequestPermissionsResult(requestCode, permissions, grandResults);
-        if (requestCode == 1000) {
-            boolean check_result = true;
-
-            // 모든 퍼미션을 허용했는지 체크
-            for (int result : grandResults) {
-                if (result != PackageManager.PERMISSION_GRANTED) {
-                    check_result = false;
-                    break;
-                }
-            }
-
-            // 권한 체크에 동의를 하지 않으면 안드로이드 종료
-            if (check_result == false) {
-                finish();
-            }
-        }
     }
 
     @Override
@@ -222,13 +197,52 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
         @Override
         public View getCalloutBalloon(MapPOIItem poiItem) {
             String array[] = poiItem.getItemName().split(",");
+            // 말풍선 공원 이미지 ID 얻어오기
+            int index = Integer.parseInt(array[18]);
+            String src = "park00";
+            if(index<10) src += "00" + index;
+            else if(index<100) src += "0" + index;
+            else src += index;
+            int id = getResources().getIdentifier(src, "drawable", "com.example.appproject");
+
+            // 1000m 이상이면 km로 변환
+            Integer distance = Integer.parseInt(array[17]);
+            String Distance;
+            if(distance >= 1000){Distance = (distance/1000) + "." + ((distance - ((distance/1000) * 1000))/100) + "km |";}
+            else Distance = distance + "m |";
+
+            //시설 개수가 6개 이상이면 5개까지만 보여줌
+            String[] ParkFacilityArray = (array[8] + "+" + array[9] + "+" + array[10] + "+" + array[11] + "+" + array[12]).split("\\+");
+            int facilityNum = ParkFacilityArray.length > 5 ? 6 :  ParkFacilityArray.length;
+
+            if(id == NULL) ((ImageView) mCalloutBalloon.findViewById(R.id.parkImage)).setImageResource(getResources().getIdentifier("@drawable/park00000", "drawable", "com.example.appproject" ));
+            else ((ImageView) mCalloutBalloon.findViewById(R.id.parkImage)).setImageResource(getResources().getIdentifier(src, "drawable", "com.example.appproject" ));
             ((TextView) mCalloutBalloon.findViewById(R.id.parkName)).setText(array[1]);
-            ((TextView) mCalloutBalloon.findViewById(R.id.parkArea)).setText(array[7]);
-            ((TextView) mCalloutBalloon.findViewById(R.id.parkDistance)).setText(array[17] + "m");
+            ((TextView) mCalloutBalloon.findViewById(R.id.parkArea)).setText(array[7] + "m^2");
+            ((TextView) mCalloutBalloon.findViewById(R.id.parkDistance)).setText(Distance);
             ((TextView) mCalloutBalloon.findViewById(R.id.parkAddress)).setText(array[3]);
-            ((TextView) mCalloutBalloon.findViewById(R.id.parkFacility)).setText(array[8] + "\n" + array[9] + "\n" + array[10] + "\n" + array[11] + "\n" + array[12]);
             ((TextView) mCalloutBalloon.findViewById(R.id.parkPhoneNumber)).setText(array[15]);
 
+            ((LinearLayout) mCalloutBalloon.findViewById(R.id.parkFacility)).removeAllViews();
+            for(int i=0; i<facilityNum; i++){
+                String facility = ParkFacilityArray[i];
+                if(facility.length() != 0 ){
+                    CardView cardView = new CardView(getApplicationContext());
+                    cardView.setRadius(10);
+                    cardView.setContentPadding(8,3,8,3);
+                    TextView textView = new TextView(getApplicationContext());
+                    if(i == 5) facility = "+ " + (ParkFacilityArray.length - 5) + "개";
+                    textView.setText(facility);
+                    textView.setTextSize(10);
+                    textView.setTypeface(null, Typeface.BOLD);
+                    textView.setId(0);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    params.leftMargin = 15;
+                    cardView.setLayoutParams(params);
+                    cardView.addView(textView);
+                    ((LinearLayout) mCalloutBalloon.findViewById(R.id.parkFacility)).addView(cardView);
+                }
+            }
             return mCalloutBalloon;
         }
 
@@ -252,9 +266,6 @@ public class kakaoMap extends AppCompatActivity implements MapView.CurrentLocati
         @Override
         public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
             String[] array = mapPOIItem.getItemName().split(",");
-            //String url = "kakaomap://search?q=" + array[1] + "&p=" + latitude + "," + longitude;
-            //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            //startActivity(intent);
             String url = "kakaomap://route?sp=" + latitude + "," + longitude + "&ep=" + array[5] + "," + array[6] + "&by=FOOT";
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
