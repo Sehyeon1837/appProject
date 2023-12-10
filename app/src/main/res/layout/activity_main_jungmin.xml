@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/GuideButton"
+                android:layout_width="36dp"
+                android:layout_height="33dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="23dp"
+                android:layout_marginTop="23dp"
+                android:layout_marginBottom="-1dp"
+                android:background="@drawable/menu" />
+
+            <ImageButton
+                android:id="@+id/QuizButton"
+                android:layout_width="36dp"
+                android:layout_height="37dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="23dp"
+                android:layout_marginRight="23dp"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/help" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/NowLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="행복하세요"
+                android:fontFamily="@font/ridi_batang"
+                android:textSize="30dp">
+            </TextView>
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center">
+            </View>
+
+            <TextView
+                android:id="@+id/NowTemperature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="좋은 아침이에요"
+                android:fontFamily="@font/ridi_batang"
+                android:textSize="25dp" >
+            </TextView>
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center">
+            </View>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/HighestTemperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="반가워요"
+                    android:fontFamily="@font/ridi_batang"
+                    android:textSize="25dp">
+                </TextView>
+
+                <View
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center">
+                </View>
+
+                <TextView
+                    android:id="@+id/LowestTemperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="안녕하세요"
+                    android:fontFamily="@font/ridi_batang"
+                    android:textSize="25dp">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center">
+                </View>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="20dp"
+                    android:text="집에 갈래요"
+                    android:fontFamily="@font/ridi_batang" >
+                </TextView>
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center">
+                </View>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/TodayWeatherAll"
+                    android:layout_width="373dp"
+                    android:layout_height="259dp"
+                    android:layout_gravity="center"
+                    tools:srcCompat="@drawable/weatherwithtime" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/SearchingGreenSpace"
+                    android:layout_width="373dp"
+                    android:layout_height="211dp"
+                    android:layout_gravity="center"
+                    tools:srcCompat="@drawable/recommendplace" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/UrbanHeatMap"
+                    android:layout_width="413dp"
+                    android:layout_height="259dp"
+                    android:layout_gravity="center"
+                    tools:srcCompat="@tools:sample/avatars" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
