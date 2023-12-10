@@ -12,34 +12,34 @@
         tools:context=".MainActivity">
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
 
-            <ImageButton
-                android:id="@+id/GuideButton"
-                android:layout_width="36dp"
-                android:layout_height="33dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="23dp"
-                android:layout_marginTop="23dp"
-                android:layout_marginBottom="-1dp"
-                android:background="@drawable/menu" />
+<!--            <ImageButton-->
+<!--                android:id="@+id/GuideButton"-->
+<!--                android:layout_width="36dp"-->
+<!--                android:layout_height="33dp"-->
+<!--                android:layout_alignParentLeft="true"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:layout_marginLeft="23dp"-->
+<!--                android:layout_marginTop="23dp"-->
+<!--                android:layout_marginBottom="-1dp"-->
+<!--                android:background="@drawable/menu" />-->
 
-            <ImageButton
-                android:id="@+id/QuizButton"
-                android:layout_width="36dp"
-                android:layout_height="37dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="23dp"
-                android:layout_marginRight="23dp"
-                android:layout_marginBottom="1dp"
-                android:background="@drawable/help" />
-        </RelativeLayout>
+<!--            <ImageButton-->
+<!--                android:id="@+id/QuizButton"-->
+<!--                android:layout_width="36dp"-->
+<!--                android:layout_height="37dp"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:layout_marginTop="23dp"-->
+<!--                android:layout_marginRight="23dp"-->
+<!--                android:layout_marginBottom="1dp"-->
+<!--                android:background="@drawable/help" />-->
+<!--        </RelativeLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,67 +78,67 @@
                 android:layout_gravity="center">
             </View>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_gravity="center">-->
 
-                <TextView
-                    android:id="@+id/HighestTemperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="반가워요"
-                    android:fontFamily="@font/ridi_batang"
-                    android:textSize="25dp">
-                </TextView>
+<!--                <TextView-->
+<!--                    android:id="@+id/HighestTemperature"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="반가워요"-->
+<!--                    android:fontFamily="@font/ridi_batang"-->
+<!--                    android:textSize="25dp">-->
+<!--                </TextView>-->
 
-                <View
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center">
-                </View>
+<!--                <View-->
+<!--                    android:layout_width="25dp"-->
+<!--                    android:layout_height="25dp"-->
+<!--                    android:layout_gravity="center">-->
+<!--                </View>-->
 
-                <TextView
-                    android:id="@+id/LowestTemperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="안녕하세요"
-                    android:fontFamily="@font/ridi_batang"
-                    android:textSize="25dp">
-                </TextView>
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:id="@+id/LowestTemperature"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="안녕하세요"-->
+<!--                    android:fontFamily="@font/ridi_batang"-->
+<!--                    android:textSize="25dp">-->
+<!--                </TextView>-->
+<!--            </LinearLayout>-->
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center">
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_gravity="center">-->
 
-                <View
-                    android:layout_width="100dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center">
-                </View>
+<!--                <View-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="20dp"-->
+<!--                    android:layout_gravity="center">-->
+<!--                </View>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textSize="20dp"
-                    android:text="집에 갈래요"
-                    android:fontFamily="@font/ridi_batang" >
-                </TextView>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textAlignment="center"-->
+<!--                    android:textSize="20dp"-->
+<!--                    android:text="집에 갈래요"-->
+<!--                    android:fontFamily="@font/ridi_batang" >-->
+<!--                </TextView>-->
 
-                <View
-                    android:layout_width="100dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center">
-                </View>
+<!--                <View-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="20dp"-->
+<!--                    android:layout_gravity="center">-->
+<!--                </View>-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
             <FrameLayout
                 android:layout_width="match_parent"
