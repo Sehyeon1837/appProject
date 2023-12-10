@@ -17,12 +17,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import parkMap.kakaoMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private Location location;
     private ArrayList<ArrayList> parkInfoArray;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         Resources res = getResources();
 
         choiceYear = findViewById(R.id.choiceyear);
+        textView = findViewById(R.id.OutputWeather); //test weather
 
         readfile = new readfiles(res, this);
         readfile.setYear("2017");
@@ -73,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
                 mapmarker.changeYear(inputYear);
             }
         });
+
+
+
+
     }
 
     public void setKakaoMap(){
@@ -106,6 +114,9 @@ public class MainActivity extends AppCompatActivity {
             location.setLatitude(35.8242238);
             location.setLongitude(127.1479532);
         }
+
+        String loccc = "lat: " + location.getLatitude() + "\tlon: " + location.getLongitude();
+        textView.setText(loccc);
 
         parkCsvReader = new ParkCsvReader(location);
         parkInfoArray = parkCsvReader.readCsv(this);
