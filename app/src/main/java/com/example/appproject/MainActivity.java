@@ -38,17 +38,15 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private Location location;
     private ArrayList<ArrayList> parkInfoArray;
-    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_merged_main);
 
         Resources res = getResources();
 
         choiceYear = findViewById(R.id.choiceyear);
-        textView = findViewById(R.id.OutputWeather); //test weather
 
         readfile = new readfiles(res, this);
         readfile.setYear("2017");
@@ -114,9 +112,6 @@ public class MainActivity extends AppCompatActivity {
             location.setLatitude(35.8242238);
             location.setLongitude(127.1479532);
         }
-
-        String loccc = "lat: " + location.getLatitude() + "\tlon: " + location.getLongitude();
-        textView.setText(loccc);
 
         parkCsvReader = new ParkCsvReader(location);
         parkInfoArray = parkCsvReader.readCsv(this);

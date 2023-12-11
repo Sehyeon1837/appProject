@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="행복하세요"
+                android:text="전주시"
                 android:fontFamily="@font/ridi_batang"
                 android:textSize="30dp">
             </TextView>
@@ -67,16 +67,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="좋은 아침이에요"
+                android:text="현재 기온"
                 android:fontFamily="@font/ridi_batang"
                 android:textSize="25dp" >
             </TextView>
 
-            <View
-                android:layout_width="100dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center">
-            </View>
+<!--            <View-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="20dp"-->
+<!--                android:layout_gravity="center">-->
+<!--            </View>-->
 
 <!--            <LinearLayout-->
 <!--                android:layout_width="wrap_content"-->
@@ -111,11 +111,11 @@
 <!--                </TextView>-->
 <!--            </LinearLayout>-->
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="vertical"-->
-<!--                android:layout_gravity="center">-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
 
 <!--                <View-->
 <!--                    android:layout_width="100dp"-->
@@ -123,47 +123,58 @@
 <!--                    android:layout_gravity="center">-->
 <!--                </View>-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:textAlignment="center"-->
-<!--                    android:textSize="20dp"-->
-<!--                    android:text="집에 갈래요"-->
-<!--                    android:fontFamily="@font/ridi_batang" >-->
-<!--                </TextView>-->
-
-<!--                <View-->
-<!--                    android:layout_width="100dp"-->
-<!--                    android:layout_height="20dp"-->
-<!--                    android:layout_gravity="center">-->
-<!--                </View>-->
-
-<!--            </LinearLayout>-->
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/TodayWeatherAll"
-                    android:layout_width="373dp"
-                    android:layout_height="259dp"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
                     android:layout_gravity="center"
-                    tools:srcCompat="@drawable/weatherwithtime" />
-            </FrameLayout>
+                    android:textSize="20dp"
+                    android:text="열섬 지수"
+                    android:fontFamily="@font/ridi_batang" >
+                </TextView>
 
-            <FrameLayout
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center">
+                </View>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/SearchingGreenSpace"
-                    android:layout_width="373dp"
-                    android:layout_height="211dp"
-                    android:layout_gravity="center"
-                    tools:srcCompat="@drawable/recommendplace" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
 
-            </FrameLayout>
+                    <Button
+                        android:id="@+id/SearchingGreenSpace"
+                        android:layout_width="180dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:background="@color/black"
+                        android:text="녹지 공간 추천" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <Button
+                        android:id="@+id/TodayWeatherAll"
+                        android:layout_width="180dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:text="퀴즈 풀기"
+                        android:background="@color/black" />
+                </FrameLayout>
+            </LinearLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
