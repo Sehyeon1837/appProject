@@ -158,7 +158,8 @@ public class readfiles extends MainActivity {
         double T = (C * 9/5) + 32;
         double RH = hum;
 
-        double hi = -42.379 + 2.04901523*T + 10.14333127*RH - .22475541*T*RH - .00683783*T*T - .05481717*RH*RH + .00122874*T*T*RH + .00085282*T*RH* RH - .00000199*T*T*RH*RH;
+        //double hi = -42.379 + 2.04901523*T + 10.14333127*RH - .22475541*T*RH - .00683783*T*T - .05481717*RH*RH + .00122874*T*T*RH + .00085282*T*RH* RH - .00000199*T*T*RH*RH;
+        double hi = 0.5 * (T + 61.0 + ((T-68.0)*1.2) + (RH*0.094));
 
         return hi;
     }

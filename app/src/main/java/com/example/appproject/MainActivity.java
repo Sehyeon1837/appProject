@@ -24,15 +24,21 @@ import parkMap.kakaoMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
+import org.w3c.dom.Text;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     private RadioGroup choiceYear;
     private Button mapBtn;
+    private TextView NowTemperature, NowUHI, uhiInfo;
     readfiles readfile;
     mapMarker mapmarker;
     String inputYear;
+    private weatherData wedata;
+    private double tempUhi;
 
     private ParkCsvReader parkCsvReader;
     private LocationManager locationManager;
@@ -47,15 +53,19 @@ public class MainActivity extends AppCompatActivity {
         Resources res = getResources();
 
         choiceYear = findViewById(R.id.choiceyear);
+        NowTemperature = findViewById(R.id.NowTemperature);
+        NowUHI = findViewById(R.id.NowUHI);
+        uhiInfo = findViewById(R.id.uhiInfo);
+        setAPIinfo();
 
+        setKakaoMap();
         readfile = new readfiles(res, this);
         readfile.setYear("2017");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapmarker = new mapMarker(res, mapFragment, readfile, MainActivity.this);
-
-        setKakaoMap();
+        mapmarker.setStart(new LatLng(location.getLatitude(), location.getLongitude()));
 
         choiceYear.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -75,9 +85,41 @@ public class MainActivity extends AppCompatActivity {
                 mapmarker.changeYear(inputYear);
             }
         });
+    }
 
+    public void setAPIinfo() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
 
+        if(minute >= 30)
+            minute = 3;
+        else
+            minute = 0;
 
+        hour--; // 기상청 api는 실시간으로 접근하면 데이터가 없는 경우도 있어서 1시간 전으로 접근
+        String currentDate = year + "" + month + "" + day;
+        String currentTime = hour + "" + minute + "0";
+        if(hour < 10)
+            currentTime = "0" + hour + "" + minute + "0";
+
+        wedata = new weatherData("63", "89", currentDate, currentTime);
+        Log.d("now", currentDate + " 시간: " + currentTime);
+
+        tempUhi = wedata.getUHI();
+
+        NowTemperature.setText(wedata.getTmp());
+        NowUHI.setText("현재 열섬 지수: "+ String.format("%.2f",  tempUhi));
+
+        if(tempUhi >= 90)
+            uhiInfo.setText("오늘의 UHI는 높은 편입니다!");
+        if(tempUhi >= 80 && tempUhi < 90)
+            uhiInfo.setText("오늘의 UHI는 조금 높습니다.");
+        else
+            uhiInfo.setText("오늘의 UHI는 보통입니다.");
 
     }
 
