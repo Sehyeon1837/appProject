@@ -9,14 +9,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private Location location;
     private ArrayList<ArrayList> parkInfoArray;
+    private ScrollView scrollView;
+    SupportMapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +62,14 @@ public class MainActivity extends AppCompatActivity {
         NowTemperature = findViewById(R.id.NowTemperature);
         NowUHI = findViewById(R.id.NowUHI);
         uhiInfo = findViewById(R.id.uhiInfo);
+        scrollView = findViewById(R.id.scrollView);
         setAPIinfo();
 
         setKakaoMap();
         readfile = new readfiles(res, this);
         readfile.setYear("2017");
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapmarker = new mapMarker(res, mapFragment, readfile, MainActivity.this);
         mapmarker.setStart(new LatLng(location.getLatitude(), location.getLongitude()));
@@ -85,6 +92,35 @@ public class MainActivity extends AppCompatActivity {
                 mapmarker.changeYear(inputYear);
             }
         });
+    }
+
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_MOVE) {
+            // 지도 위에서의 모든 터치는 스크롤뷰로 처리 못하게 함
+            if (isTouchOnMap(ev)) {
+                scrollView.requestDisallowInterceptTouchEvent(true);
+                return super.dispatchTouchEvent(ev);
+            }
+        }
+
+        scrollView.requestDisallowInterceptTouchEvent(false);
+        return super.dispatchTouchEvent(ev);
+    }
+
+    private boolean isTouchOnMap(MotionEvent ev) {
+        if (mapFragment == null || mapFragment.getView() == null) {
+            return false;
+        }
+
+        int[] location = new int[2];
+        mapFragment.getView().getLocationInWindow(location);
+
+        Rect fragmentRect = new Rect(location[0], location[1],
+                location[0] + mapFragment.getView().getWidth(),
+                location[1] + mapFragment.getView().getHeight());
+
+        // 영역 확인
+        return fragmentRect.contains((int) ev.getRawX(), (int) ev.getRawY());
     }
 
     public void setAPIinfo() {
