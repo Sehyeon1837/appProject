@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -64,6 +65,28 @@ public class MainActivity extends AppCompatActivity {
         uhiInfo = findViewById(R.id.uhiInfo);
         scrollView = findViewById(R.id.scrollView);
         setAPIinfo();
+
+        // 퀴즈 버튼, 가이드 버튼
+        Button quizbutton = findViewById(R.id.QuizButton);
+        ImageButton rightbutton = findViewById(R.id.GuideButton);
+
+        // 퀴즈 버튼 활성화
+        quizbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, QuizButton.class);
+                startActivity(intent);
+            }
+        });
+
+        // 가이드 버튼 활성화
+        rightbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, GuideButton.class);
+                startActivity(intent);
+            }
+        });
 
         setKakaoMap();
         readfile = new readfiles(res, this);
