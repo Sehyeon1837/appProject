@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +58,28 @@ public class MainActivity extends AppCompatActivity {
         NowUHI = findViewById(R.id.NowUHI);
         uhiInfo = findViewById(R.id.uhiInfo);
         setAPIinfo();
+
+        // 퀴즈 버튼, 가이드 버튼
+        ImageButton leftbutton = findViewById(R.id.QuizButton);
+        ImageButton rightbutton = findViewById(R.id.GuideButton);
+
+        // 퀴즈 버튼 활성화
+        leftbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, GuideButton.class);
+                startActivity(intent);
+            }
+        });
+
+        // 가이드 버튼 활성화
+        rightbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, QuizButton.class);
+                startActivity(intent);
+            }
+        });
 
         setKakaoMap();
         readfile = new readfiles(res, this);
