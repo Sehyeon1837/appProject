@@ -42,6 +42,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--StartPage -->
+        <activity
+            android:name=".StartPage"
+            android:exported="true" >
+        </activity>
+
+        <!-- QuizButton -->
+        <activity
+            android:name=".QuizButton"
+            android:exported="true" >
+        </activity>
+
+        <!-- GuideButton -->
+        <activity
+            android:name=".GuideButton"
+            android:exported="true" >
+        </activity>
+
     </application>
 
 </manifest>

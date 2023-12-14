@@ -3,8 +3,11 @@ package com.example.appproject;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -30,6 +33,7 @@ public class mapMarker implements OnMapReadyCallback {
     private MarkerOptions[] MarkerOptionsList;
     private CircleOptions[] CircleOptionsList;
     Activity mainAct;
+    private LatLng startPoint;
 
     public mapMarker(Resources res, SupportMapFragment mapFragment, readfiles readfile, Activity mainAct) {
         year = "2017";
@@ -53,7 +57,7 @@ public class mapMarker implements OnMapReadyCallback {
         mMap = googleMap;
         LatLng JEONJU = new LatLng(35.8412, 127.1318);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(JEONJU,16));
-        mMap.getUiSettings().setZoomControlsEnabled(true); //https://luminitworld.tistory.com/61
+        mMap.getUiSettings().setZoomControlsEnabled(true);
 
         ChecktheMarkers();
         setCircle();
@@ -64,19 +68,32 @@ public class mapMarker implements OnMapReadyCallback {
                 String circleid = circle.getId().toString().substring(2);
                 int idToint = Integer.parseInt(circleid);
                 idToint = idToint % 19;
-                double idTodouble = readfile.getUHITemp(idToint);
-                Toast.makeText(mainAct, String.format("%.2f", idTodouble), Toast.LENGTH_SHORT).show();
-
+                // 원 클릭시 마커로 이동
                 LatLng newloc = new LatLng(Double.parseDouble(latlist[idToint]), Double.parseDouble(lonlist[idToint]));
                 changeCamera(newloc);
+
             }
         });
+    }
+
+    public void setStart(LatLng newloc) {
+        startPoint = newloc;
+        new Handler().postDelayed(new Runnable() { // mMap이 null인 경우 처리
+            @Override
+            public void run() {
+                if (mMap == null) {
+                    setStart(newloc);
+                } else {
+                    changeCamera(startPoint);
+                }
+            }
+        }, 100);
+
     }
 
     public void changeCamera(LatLng newloc) {
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(newloc);
         mMap.animateCamera(cameraUpdate);
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newloc,16));
     }
 
     public void changeYear(String Newyear) {
@@ -106,12 +123,41 @@ public class mapMarker implements OnMapReadyCallback {
 
             if(temp == "" || temp == "0")
                 temp = "해당 년도의 데이터가 존재하지 않습니다";
+            else {
+                temp += "\n열섬 지수: " + String.format("%.2f", readfile.getUHITemp(i));
+
+            }
 
             markerOptions.snippet(temp);
 
             MarkerOptionsList[i] = markerOptions;
-            mMap.addMarker(markerOptions);
 
+        }
+
+        // 새로 정보창 설정, 기존꺼는 텍스트가 잘림
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                LayoutInflater inflater = mainAct.getLayoutInflater();
+                View infoView = inflater.inflate(R.layout.info_window, null);
+
+                TextView title = infoView.findViewById(R.id.info_title);
+                TextView snippet = infoView.findViewById(R.id.info_snippet);
+
+                title.setText(marker.getTitle());
+                snippet.setText(marker.getSnippet());
+
+                return infoView;
+            }
+        });
+
+        for (MarkerOptions options : MarkerOptionsList) {
+            mMap.addMarker(options);
         }
     }
 
@@ -135,15 +181,15 @@ public class mapMarker implements OnMapReadyCallback {
 
     private int getColor(int index) {
         tempUHI = readfile.getUHITemp(index);
-        if(tempUHI >= 81)
-            return 0x80FF0000;
-        if(tempUHI >= 76 && tempUHI < 81)
-            return 0x80FF6600;
+        if(tempUHI >= 80)
+            return 0x80FF0000; //짙은 빨강
+        if(tempUHI >= 76 && tempUHI < 80)
+            return 0x80FF6600; //빨강 ~ 주황
         if(tempUHI >= 71 && tempUHI < 76)
-            return 0x80FF9900;
+            return 0x80FF9900; //노랑
 
         if(tempUHI == 0.0)
-            return 0x80CCCCCC;
+            return 0x80CCCCCC; //회색
 
         return 0x80FFFF33;
     }
