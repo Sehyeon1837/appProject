@@ -238,7 +238,7 @@
                 android:layout_height="300dp"
                 android:textAlignment="center"
                 android:fontFamily="@font/ridi_batang"
-                android:text="원 색상에 따른 UHI 지수\n빨강: 90 이상\n주황: 80 이상\n노랑: 80 미만\n정보가 없는 경우 회색으로 표기됩니다." />
+                android:text="원 색상에 따른 UHI 지수\n빨강: 80 이상\n주황: 76 이상\n노랑: 76 미만\n정보가 없는 경우 회색으로 표기됩니다." />
 
         </LinearLayout>
     </LinearLayout>

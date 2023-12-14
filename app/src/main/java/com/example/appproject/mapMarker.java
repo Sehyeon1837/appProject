@@ -181,11 +181,11 @@ public class mapMarker implements OnMapReadyCallback {
 
     private int getColor(int index) {
         tempUHI = readfile.getUHITemp(index);
-        if(tempUHI >= 90)
+        if(tempUHI >= 80)
             return 0x80FF0000; //짙은 빨강
-        if(tempUHI >= 80 && tempUHI < 90)
+        if(tempUHI >= 76 && tempUHI < 80)
             return 0x80FF6600; //빨강 ~ 주황
-        if(tempUHI >= 71 && tempUHI < 80)
+        if(tempUHI >= 71 && tempUHI < 76)
             return 0x80FF9900; //노랑
 
         if(tempUHI == 0.0)
