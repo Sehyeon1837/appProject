@@ -60,14 +60,14 @@ public class MainActivity extends AppCompatActivity {
         setAPIinfo();
 
         // 퀴즈 버튼, 가이드 버튼
-        ImageButton leftbutton = findViewById(R.id.QuizButton);
+        Button quizbutton = findViewById(R.id.QuizButton);
         ImageButton rightbutton = findViewById(R.id.GuideButton);
 
         // 퀴즈 버튼 활성화
-        leftbutton.setOnClickListener(new View.OnClickListener() {
+        quizbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, GuideButton.class);
+                Intent intent = new Intent(MainActivity.this, QuizButton.class);
                 startActivity(intent);
             }
         });
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         rightbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, QuizButton.class);
+                Intent intent = new Intent(MainActivity.this, GuideButton.class);
                 startActivity(intent);
             }
         });
